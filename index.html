@@ -5,53 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday!</title>
     <style>
+        /* General Styles */
         body {
             text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         h1 {
-            color: #ff69b4;
             font-size: 3rem;
-            margin-top: 50px;
+            color: #ff69b4;
+            margin: 20px 0;
         }
-        .surprise-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+        h2 {
             color: white;
-            background-color: #ff69b4;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
-        .surprise-btn:hover {
-            background-color: #ff1493;
+        p {
+            color: white;
+            font-size: 1.5rem;
+            margin: 20px;
         }
         .hidden {
             display: none;
+        }
+
+        /* Countdown Styles */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .countdown div {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            width: 100px;
+        }
+
+        /* Surprise Button */
+        .surprise-btn {
             margin-top: 20px;
+            padding: 15px 30px;
             font-size: 1.5rem;
+            color: white;
+            background-color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+        .surprise-btn:hover {
+            background-color: #ff1493;
+            transform: scale(1.1);
+        }
+
+        /* Surprise Box */
+        .surprise {
+            margin: 30px auto;
             color: #333;
+            padding: 20px;
+            font-size: 1.8rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .confetti span {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
         }
     </style>
 </head>
 <body>
-    <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
-    <p>Today is all about celebrating how amazing you are!</p>
-    <img src="https://via.placeholder.com/400x300" alt="Birthday Image" style="margin: 20px;">
 
-    <button class="surprise-btn" onclick="revealSurprise()">Click here for your surprise!</button>
-    <div id="surprise" class="hidden">
-        🎁 Your gift: [Link or Message] 🎁
-        <p>Hope this makes your day even more special!</p>
+    <!-- Title -->
+    <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
+
+    <!-- Countdown Timer -->
+    <h2>Time Until Your Special Surprise:</h2>
+    <div class="countdown" id="countdown">
+        <div><span id="days">00</span><br>Days</div>
+        <div><span id="hours">00</span><br>Hours</div>
+        <div><span id="minutes">00</span><br>Minutes</div>
+        <div><span id="seconds">00</span><br>Seconds</div>
     </div>
 
+    <!-- Surprise Button -->
+    <button class="surprise-btn" onclick="revealSurprise()">Click Here for Your Gift! 🎁</button>
+
+    <!-- Hidden Surprise -->
+    <div id="surprise" class="surprise hidden">
+        🥳 A special surprise for you! <br>
+        🎁 [Link to a gift or heartfelt message]
+    </div>
+
+    <!-- Confetti -->
+    <div class="confetti" id="confetti"></div>
+
     <script>
+        // Countdown Timer
+        const birthday = new Date().setHours(23, 59, 59); // Set the target time
+        const countdown = document.getElementById("countdown");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = birthday - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000)) / 1000);
+
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                countdown.innerHTML = "🎉 It's time for the surprise!";
+            }
+        }
+
+        const timer = setInterval(updateCountdown, 1000);
+
+        // Reveal Surprise
         function revealSurprise() {
-            document.getElementById('surprise').classList.remove('hidden');
+            document.getElementById("surprise").classList.remove("hidden");
+
+            // Start Confetti
+            const confetti = document.getElementById("confetti");
+            for (let i = 0; i < 100; i++) {
+                const span = document.createElement("span");
+                span.style.left = `${Math.random() * 100}%`;
+                span.style.animationDelay = `${Math.random() * 4}s`;
+                confetti.appendChild(span);
+            }
         }
     </script>
 </body>
