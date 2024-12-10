@@ -3,40 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday da!</title>
+    <title>Happy Birthday Da!</title>
     <style>
+        /* General Styling */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            color: #333;
+            color: #ffffff;
             margin: 0;
             padding: 0;
+            background-image: url('https://source.unsplash.com/1920x1080/?birthday,party'); /* Random birthday-themed background */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            backdrop-filter: blur(3px);
         }
 
         h1 {
             margin-top: 20px;
             font-size: 3rem;
-            color: #ff4081;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 5px #000;
+            animation: fadeIn 2s ease-in-out;
         }
 
         h2 {
-            color: white;
+            color: #ffe4e1;
             margin-top: 10px;
+            text-shadow: 1px 1px 4px #000;
         }
 
         .container {
             margin-top: 20px;
-            color: white;
             font-size: 1.5rem;
+            text-shadow: 1px 1px 4px #000;
         }
 
         .container span {
             font-weight: bold;
-            color: yellow;
+            color: #ffeb3b;
         }
 
-        .button {
+        .quotes {
+            font-style: italic;
+            margin-top: 30px;
+            font-size: 1.3rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 4px #000;
+            animation: floatText 5s infinite;
+        }
+
+        /* Floating animation for quotes */
+        @keyframes floatText {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Live Age Section Animation */
+        @keyframes popUp {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .age-display {
+            animation: popUp 1s ease-in-out;
+        }
+
+        .interactive {
+            margin-top: 30px;
+        }
+
+        .interactive button {
             background-color: #ff4081;
             color: white;
             font-size: 1.2rem;
@@ -45,45 +102,57 @@
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 20px;
+            margin: 10px;
         }
 
-        .button:hover {
+        .interactive button:hover {
             background-color: #e91e63;
+            transform: scale(1.1);
         }
 
-        .quotes {
-            font-style: italic;
-            margin-top: 30px;
-            font-size: 1.3rem;
-            color: #ffffff;
+        .sparkles {
+            font-size: 2rem;
+            color: #ffd700;
+            animation: sparkle 1.5s infinite;
         }
 
-        .highlight {
-            color: #ffeb3b;
-            font-weight: bold;
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Greeting -->
     <h1>🎉 Happy Birthday Da Twin-eh....🍻! 🎂</h1>
-    <h2>Your Special Day Deserves a Special Surprise!</h2>
+    <h2>Let’s celebrate this special day with joy and laughter!</h2>
 
     <!-- Inspirational Lines -->
     <p class="quotes">
         "Time flies, but the memories we create remain forever." 🌟  
         <br>Here's to celebrating <span class="highlight">you</span>—the kindest, funniest, and most amazing person I know!
     </p>
+
     <p class="quotes">
         Our journey so far is <span class="highlight">inspiring</span>, and I’m so lucky to be part of it.  
-        <br>Let's make today unforgettable! 🎊
+        <br>Let’s make today unforgettable! 🎊
     </p>
 
     <!-- Live Age Section -->
     <div class="container">
         <p>Your Current Age:</p>
-        <p><span id="years">0</span> Years, <span id="days">0</span> Days, <span id="hours">0</span> Hours, <span id="minutes">0</span> Minutes, <span id="seconds">0</span> Seconds</p>
+        <p class="age-display"><span id="years">0</span> Years, <span id="days">0</span> Days, <span id="hours">0</span> Hours, <span id="minutes">0</span> Minutes, <span id="seconds">0</span> Seconds</p>
+    </div>
+
+    <!-- Interactive Section -->
+    <div class="interactive">
+        <p class="sparkles">✨ Click to share some magic! ✨</p>
+        <button onclick="displayMessage()">🎈 Click Me!</button>
+        <p id="magicMessage" style="display: none; font-size: 1.3rem; color: #ffeb3b; margin-top: 20px;"></p>
     </div>
 
     <script>
@@ -98,7 +167,7 @@
             const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
             const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
             // Update live age elements
@@ -111,6 +180,13 @@
 
         // Update age every second
         setInterval(calculateAge, 1000);
+
+        // Display an interactive message
+        function displayMessage() {
+            const messageElement = document.getElementById("magicMessage");
+            messageElement.style.display = "block";
+            messageElement.textContent = "🎉 You're not just a year older, you're a year bolder and brighter! 🌟";
+        }
     </script>
 </body>
 </html>
