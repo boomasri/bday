@@ -56,18 +56,12 @@
 <body>
     <!-- Greeting -->
     <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
-    <h2>Your Live Age + Countdown to Your Next Birthday</h2>
+    <h2>Your Live Age</h2>
 
     <!-- Live Age Section -->
     <div class="container">
         <p>Age:</p>
         <p><span id="years">0</span> Years, <span id="days">0</span> Days, <span id="hours">0</span> Hours, <span id="minutes">0</span> Minutes, <span id="seconds">0</span> Seconds</p>
-    </div>
-
-    <!-- Countdown Section -->
-    <div class="container">
-        <p>Time Until Your Next Birthday:</p>
-        <p><span id="countdownDays">0</span> Days, <span id="countdownHours">0</span> Hours, <span id="countdownMinutes">0</span> Minutes, <span id="countdownSeconds">0</span> Seconds</p>
     </div>
 
     <!-- Surprise Button -->
@@ -102,35 +96,8 @@
             document.getElementById("seconds").textContent = seconds;
         }
 
-        // Function to calculate countdown to next birthday
-        function calculateCountdown() {
-            const now = new Date();
-            let nextBirthday = new Date(now.getFullYear(), 11, 12, 11, 40); // This year's birthday
-
-            if (now > nextBirthday) {
-                nextBirthday = new Date(now.getFullYear() + 1, 11, 12, 11, 40); // Next year's birthday
-            }
-
-            const diff = nextBirthday - now;
-
-            // Convert the difference into time units
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            // Update countdown elements
-            document.getElementById("countdownDays").textContent = days;
-            document.getElementById("countdownHours").textContent = hours;
-            document.getElementById("countdownMinutes").textContent = minutes;
-            document.getElementById("countdownSeconds").textContent = seconds;
-        }
-
-        // Update age and countdown every second
-        setInterval(() => {
-            calculateAge();
-            calculateCountdown();
-        }, 1000);
+        // Update age every second
+        setInterval(calculateAge, 1000);
 
         // Reveal surprise
         function revealSurprise() {
