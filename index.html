@@ -7,7 +7,7 @@
     <style>
         /* General Page Styling */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
             background: linear-gradient(to right, #ff9a9e, #fad0c4);
             color: #333;
@@ -29,7 +29,7 @@
         p {
             font-size: 1.2rem;
             color: white;
-            margin-top: 15px;
+            margin: 20px 0;
         }
 
         .button {
@@ -48,42 +48,71 @@
             background-color: #e91e63;
         }
 
-        .surprise-container {
-            display: none;
+        .age-container {
             margin-top: 20px;
+            font-size: 1.5rem;
             color: white;
+            text-align: center;
         }
 
-        .surprise-container img {
-            width: 80%;
-            max-width: 500px;
-            margin-top: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        .age-container span {
+            font-weight: bold;
+            color: yellow;
         }
     </style>
 </head>
 <body>
     <!-- Main Greeting -->
     <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
-    <h2>Let's Celebrate Your Special Day! 🥳</h2>
-    <p>Click the button below for a surprise!</p>
+    <h2>Welcome to Your Live Age Calculator!</h2>
+    <p>Here's how old you are, down to the second:</p>
+
+    <!-- Live Age Display -->
+    <div class="age-container">
+        <p><span id="years">0</span> Years</p>
+        <p><span id="days">0</span> Days</p>
+        <p><span id="hours">0</span> Hours</p>
+        <p><span id="minutes">0</span> Minutes</p>
+        <p><span id="seconds">0</span> Seconds</p>
+    </div>
 
     <!-- Surprise Button -->
     <button class="button" onclick="revealSurprise()">🎁 Show My Surprise</button>
 
-    <!-- Hidden Surprise Content -->
-    <div class="surprise-container" id="surprise">
-        <p>🎊 You are an amazing person! Here's a little gift to brighten your day:</p>
-        <img src="https://via.placeholder.com/500x300?text=Happy+Birthday!" alt="Happy Birthday">
+    <!-- Hidden Surprise -->
+    <div id="surprise" class="age-container" style="display: none;">
+        <p>🎊 You're amazing! Here's your special gift:</p>
         <p>🎁 <a href="https://example.com" target="_blank" style="color: yellow; text-decoration: underline;">Click Here to Claim Your Gift!</a></p>
     </div>
 
     <!-- Script -->
     <script>
+        const dob = new Date(1998, 11, 12, 11, 40); // Date of Birth: 12 Dec 1998, 11:40 AM
+
+        function calculateAge() {
+            const now = new Date();
+            const diff = now - dob; // Difference in milliseconds
+
+            // Convert the difference into various time units
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Update the age elements in the webpage
+            document.getElementById("years").textContent = years;
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+        }
+
+        // Update age every second
+        setInterval(calculateAge, 1000);
+
         function revealSurprise() {
-            const surpriseDiv = document.getElementById("surprise");
-            surpriseDiv.style.display = "block";
+            document.getElementById("surprise").style.display = "block";
         }
     </script>
 </body>
