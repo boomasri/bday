@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday!</title>
     <style>
-        /* General Page Styling */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -26,10 +25,15 @@
             margin-top: 10px;
         }
 
-        p {
-            font-size: 1.2rem;
+        .container {
+            margin-top: 20px;
             color: white;
-            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+
+        .container span {
+            font-weight: bold;
+            color: yellow;
         }
 
         .button {
@@ -47,51 +51,41 @@
         .button:hover {
             background-color: #e91e63;
         }
-
-        .age-container {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            color: white;
-            text-align: center;
-        }
-
-        .age-container span {
-            font-weight: bold;
-            color: yellow;
-        }
     </style>
 </head>
 <body>
-    <!-- Main Greeting -->
+    <!-- Greeting -->
     <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
-    <h2>Welcome to Your Live Age Calculator!</h2>
-    <p>Here's how old you are, down to the second:</p>
+    <h2>Your Live Age + Countdown to Your Next Birthday</h2>
 
-    <!-- Live Age Display -->
-    <div class="age-container">
-        <p><span id="years">0</span> Years</p>
-        <p><span id="days">0</span> Days</p>
-        <p><span id="hours">0</span> Hours</p>
-        <p><span id="minutes">0</span> Minutes</p>
-        <p><span id="seconds">0</span> Seconds</p>
+    <!-- Live Age Section -->
+    <div class="container">
+        <p>Age:</p>
+        <p><span id="years">0</span> Years, <span id="days">0</span> Days, <span id="hours">0</span> Hours, <span id="minutes">0</span> Minutes, <span id="seconds">0</span> Seconds</p>
+    </div>
+
+    <!-- Countdown Section -->
+    <div class="container">
+        <p>Time Until Your Next Birthday:</p>
+        <p><span id="countdownDays">0</span> Days, <span id="countdownHours">0</span> Hours, <span id="countdownMinutes">0</span> Minutes, <span id="countdownSeconds">0</span> Seconds</p>
     </div>
 
     <!-- Surprise Button -->
     <button class="button" onclick="revealSurprise()">🎁 Show My Surprise</button>
 
-    <!-- Hidden Surprise -->
-    <div id="surprise" class="age-container" style="display: none;">
+    <!-- Surprise Section -->
+    <div class="container" id="surprise" style="display: none;">
         <p>🎊 You're amazing! Here's your special gift:</p>
         <p>🎁 <a href="https://example.com" target="_blank" style="color: yellow; text-decoration: underline;">Click Here to Claim Your Gift!</a></p>
     </div>
 
-    <!-- Script -->
     <script>
         const dob = new Date(1998, 11, 12, 11, 40); // Date of Birth: 12 Dec 1998, 11:40 AM
 
+        // Function to calculate live age
         function calculateAge() {
             const now = new Date();
-            const diff = now - dob; // Difference in milliseconds
+            const diff = now - dob; // Milliseconds difference
 
             // Convert the difference into various time units
             const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
@@ -100,7 +94,7 @@
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Update the age elements in the webpage
+            // Update live age elements
             document.getElementById("years").textContent = years;
             document.getElementById("days").textContent = days;
             document.getElementById("hours").textContent = hours;
@@ -108,9 +102,37 @@
             document.getElementById("seconds").textContent = seconds;
         }
 
-        // Update age every second
-        setInterval(calculateAge, 1000);
+        // Function to calculate countdown to next birthday
+        function calculateCountdown() {
+            const now = new Date();
+            let nextBirthday = new Date(now.getFullYear(), 11, 12, 11, 40); // This year's birthday
 
+            if (now > nextBirthday) {
+                nextBirthday = new Date(now.getFullYear() + 1, 11, 12, 11, 40); // Next year's birthday
+            }
+
+            const diff = nextBirthday - now;
+
+            // Convert the difference into time units
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Update countdown elements
+            document.getElementById("countdownDays").textContent = days;
+            document.getElementById("countdownHours").textContent = hours;
+            document.getElementById("countdownMinutes").textContent = minutes;
+            document.getElementById("countdownSeconds").textContent = seconds;
+        }
+
+        // Update age and countdown every second
+        setInterval(() => {
+            calculateAge();
+            calculateCountdown();
+        }, 1000);
+
+        // Reveal surprise
         function revealSurprise() {
             document.getElementById("surprise").style.display = "block";
         }
