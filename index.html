@@ -5,167 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday!</title>
     <style>
-        /* General Styles */
+        /* General Page Styling */
         body {
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #333;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
+
         h1 {
+            margin-top: 20px;
             font-size: 3rem;
-            color: #ff69b4;
-            margin: 20px 0;
+            color: #ff4081;
         }
+
         h2 {
             color: white;
-            font-size: 2rem;
-            margin-bottom: 10px;
+            margin-top: 10px;
         }
+
         p {
+            font-size: 1.2rem;
             color: white;
-            font-size: 1.5rem;
-            margin: 20px;
-        }
-        .hidden {
-            display: none;
+            margin-top: 15px;
         }
 
-        /* Countdown Styles */
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+        .button {
+            background-color: #ff4081;
             color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        .countdown div {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 10px;
-            border-radius: 10px;
-            width: 100px;
-        }
-
-        /* Surprise Button */
-        .surprise-btn {
-            margin-top: 20px;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            color: white;
-            background-color: #ff69b4;
+            font-size: 1.2rem;
             border: none;
-            border-radius: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.3s ease;
-        }
-        .surprise-btn:hover {
-            background-color: #ff1493;
-            transform: scale(1.1);
+            transition: all 0.3s;
+            margin-top: 20px;
         }
 
-        /* Surprise Box */
-        .surprise {
-            margin: 30px auto;
-            color: #333;
-            padding: 20px;
-            font-size: 1.8rem;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .button:hover {
+            background-color: #e91e63;
+        }
+
+        .surprise-container {
+            display: none;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .surprise-container img {
+            width: 80%;
             max-width: 500px;
-        }
-
-        /* Confetti Animation */
-        .confetti {
-            position: fixed;
-            top: -10%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .confetti span {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: white;
-            animation: fall 4s linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(720deg); }
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-
-    <!-- Title -->
+    <!-- Main Greeting -->
     <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
-
-    <!-- Countdown Timer -->
-    <h2>Time Until Your Special Surprise:</h2>
-    <div class="countdown" id="countdown">
-        <div><span id="days">00</span><br>Days</div>
-        <div><span id="hours">00</span><br>Hours</div>
-        <div><span id="minutes">00</span><br>Minutes</div>
-        <div><span id="seconds">00</span><br>Seconds</div>
-    </div>
+    <h2>Let's Celebrate Your Special Day! 🥳</h2>
+    <p>Click the button below for a surprise!</p>
 
     <!-- Surprise Button -->
-    <button class="surprise-btn" onclick="revealSurprise()">Click Here for Your Gift! 🎁</button>
+    <button class="button" onclick="revealSurprise()">🎁 Show My Surprise</button>
 
-    <!-- Hidden Surprise -->
-    <div id="surprise" class="surprise hidden">
-        🥳 A special surprise for you! <br>
-        🎁 [Link to a gift or heartfelt message]
+    <!-- Hidden Surprise Content -->
+    <div class="surprise-container" id="surprise">
+        <p>🎊 You are an amazing person! Here's a little gift to brighten your day:</p>
+        <img src="https://via.placeholder.com/500x300?text=Happy+Birthday!" alt="Happy Birthday">
+        <p>🎁 <a href="https://example.com" target="_blank" style="color: yellow; text-decoration: underline;">Click Here to Claim Your Gift!</a></p>
     </div>
 
-    <!-- Confetti -->
-    <div class="confetti" id="confetti"></div>
-
+    <!-- Script -->
     <script>
-        // Countdown Timer
-        const birthday = new Date().setHours(23, 59, 59); // Set the target time
-        const countdown = document.getElementById("countdown");
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = birthday - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000)) / 1000);
-
-            document.getElementById("days").textContent = days;
-            document.getElementById("hours").textContent = hours;
-            document.getElementById("minutes").textContent = minutes;
-            document.getElementById("seconds").textContent = seconds;
-
-            if (distance < 0) {
-                clearInterval(timer);
-                countdown.innerHTML = "🎉 It's time for the surprise!";
-            }
-        }
-
-        const timer = setInterval(updateCountdown, 1000);
-
-        // Reveal Surprise
         function revealSurprise() {
-            document.getElementById("surprise").classList.remove("hidden");
-
-            // Start Confetti
-            const confetti = document.getElementById("confetti");
-            for (let i = 0; i < 100; i++) {
-                const span = document.createElement("span");
-                span.style.left = `${Math.random() * 100}%`;
-                span.style.animationDelay = `${Math.random() * 4}s`;
-                confetti.appendChild(span);
-            }
+            const surpriseDiv = document.getElementById("surprise");
+            surpriseDiv.style.display = "block";
         }
     </script>
 </body>
