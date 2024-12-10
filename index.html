@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #ff69b4;
+            font-size: 3rem;
+            margin-top: 50px;
+        }
+        .surprise-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #ff69b4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .surprise-btn:hover {
+            background-color: #ff1493;
+        }
+        .hidden {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉 Happy Birthday, [Friend's Name]! 🎂</h1>
+    <p>Today is all about celebrating how amazing you are!</p>
+    <img src="https://via.placeholder.com/400x300" alt="Birthday Image" style="margin: 20px;">
+
+    <button class="surprise-btn" onclick="revealSurprise()">Click here for your surprise!</button>
+    <div id="surprise" class="hidden">
+        🎁 Your gift: [Link or Message] 🎁
+        <p>Hope this makes your day even more special!</p>
+    </div>
+
+    <script>
+        function revealSurprise() {
+            document.getElementById('surprise').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
